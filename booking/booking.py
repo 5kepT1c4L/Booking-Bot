@@ -24,4 +24,33 @@ class Booking(webdriver.Chrome):
             'button[data-tooltip-text="Choose your currency"]'
         )
         currency_element.click()
+        selected_currency_element = self.find_element_by_css_selector(
+            'a[data-modal-header-async-url-param*="selected_currency={}"]'.format(currency)
+        )
+        selected_currency_element.click()
+
+    def select_place_to_go(self, place_to_go):
+        search_field = self.find_element_by_css_selector(
+            'input[aria-label="Type your destination"]'
+        )
+        search_field.clear()
+        search_field.send_keys(place_to_go)
+
+        first_result = self.find_element_by_css_selector(
+            'li[data-i="0"]'
+        )
+        first_result.click()
+
+    def select_dates(self, check_in_date, check_out_date):
+        check_in_element = self.find_element_by_css_selector(
+            f'td[data-date="{check_in_date}"]'
+        )
+        check_in_element.click()
+
+        check_out_element = self.find_element_by_css_selector(
+            f'td[data-date="{check_out_date}"]'
+        )
+        check_out_element.click()
+
+
         
