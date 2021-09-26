@@ -10,7 +10,6 @@ class Booking(webdriver.Chrome):
         os.environ['PATH'] += self.driver_path
         super(Booking, self).__init__()
         self.implicitly_wait(15)
-        self.maximize_window
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.teardown:
@@ -51,6 +50,51 @@ class Booking(webdriver.Chrome):
             f'td[data-date="{check_out_date}"]'
         )
         check_out_element.click()
+
+    def select_adults(self, count=1):
+        selection_element = self.find_element_by_css_selector(
+            'label[for="xp__guests__input"]'
+        )
+        selection_element.click()
+
+        while True:
+
+            number_of_adults_frame = self.find_element_by_id("group_adults")
+
+            number_of_adults = number_of_adults_frame.get_attribute('value')
+
+            if int(number_of_adults) < count:
+
+                adults_increase_button = self.find_element_by_css_selector(
+                    'button[aria-label="Increase number of Adults"]'
+                )
+
+                for times in range(0, count - int(number_of_adults)):
+
+                    adults_increase_button.click()
+
+                    break
+
+            if int(number_of_adults) > count:
+
+                adults_decrease_button = self.find_element_by_css_selector(
+                    'button[aria-label="Decrease number of Adults"]'
+                )
+
+                for times in range(0, 0, count - int(number_of_adults)):
+
+                    adults_decrease_button.click()
+
+                    break
+
+
+
+
+
+
+
+
+
 
 
         
